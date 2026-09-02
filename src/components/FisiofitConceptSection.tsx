@@ -1,41 +1,127 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, ClipboardCheck, Sliders, HeartPulse, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ClipboardCheck, Sliders, HeartPulse, CheckCircle2, Users, ShieldCheck } from 'lucide-react';
 
 export const FisiofitConceptSection: React.FC = () => {
+  const [imageError, setImageError] = useState(false);
+
   return (
     <section
       id="cos-e-fisiofit"
-      className="relative py-16 sm:py-24 bg-slate-50/70 border-y border-slate-200/60 overflow-hidden"
+      className="relative py-16 sm:py-24 bg-slate-50/80 border-y border-slate-200/60 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#005662]/10 text-[#005662] mb-4">
-            <span className="font-sans font-bold text-xs tracking-wider uppercase">
-              La Filosofia Zenith
-            </span>
-          </div>
-          <h2
-            id="fisiofit-title"
-            className="font-heading text-3xl sm:text-5xl md:text-6xl text-[#002b31] tracking-tight uppercase leading-[0.95]"
+        {/* Top 2-Column Row: Left Philosophy Text + Right Staff Image with Black Gradient */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Column: Text Content */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-6 flex flex-col items-start text-left"
           >
-            ALLENARSI È SOLO UNA PARTE DEL PERCORSO.
-          </h2>
-        </div>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#005662]/10 text-[#005662] mb-4">
+              <span className="font-sans font-bold text-xs tracking-wider uppercase">
+                La Filosofia Zenith
+              </span>
+            </div>
 
-        {/* Section Body Text */}
-        <div className="max-w-3xl mx-auto mt-8 text-center space-y-4">
-          <p className="font-sans text-base sm:text-lg text-slate-700 leading-relaxed">
-            Zenith nasce da un <strong className="text-[#005662] font-semibold">approccio integrato al movimento</strong>. L'obiettivo non è soltanto allenarsi, ma prevenire le problematiche muscoloscheletriche attraverso l'attività motoria e intervenire, quando necessario, attraverso il centro fisioterapico.
-          </p>
-          <p className="font-sans text-base sm:text-lg text-slate-600 leading-relaxed">
-            Il percorso parte dalla persona: attraverso una <strong className="text-[#002b31] font-semibold">valutazione chinesiologica</strong> vengono analizzate caratteristiche, necessità e obiettivi individuali. Da qui viene costruito un programma di allenamento personalizzato e, in presenza di problematiche specifiche, il percorso può essere integrato con il supporto fisioterapico.
-          </p>
+            <h2
+              id="fisiofit-title"
+              className="font-heading text-3xl sm:text-4xl md:text-5xl text-[#002b31] tracking-tight uppercase leading-[0.98]"
+            >
+              ALLENARSI È SOLO UNA PARTE DEL PERCORSO.
+            </h2>
+
+            <div className="w-20 h-1 bg-[#007a8c] mt-4 mb-6 rounded-full" />
+
+            <div className="space-y-4 text-slate-700 font-sans">
+              <p className="text-base sm:text-lg leading-relaxed text-slate-700">
+                Zenith nasce da un{' '}
+                <strong className="text-[#005662] font-semibold">
+                  approccio integrato al movimento
+                </strong>
+                . L'obiettivo non è soltanto allenarsi, ma prevenire le problematiche muscoloscheletriche attraverso l'attività motoria e intervenire, quando necessario, attraverso il centro fisioterapico.
+              </p>
+              <p className="text-base sm:text-lg leading-relaxed text-slate-600">
+                Il percorso parte dalla persona: attraverso una{' '}
+                <strong className="text-[#002b31] font-semibold">
+                  valutazione chinesiologica
+                </strong>{' '}
+                vengono analizzate caratteristiche, necessità e obiettivi individuali. Da qui viene costruito un programma di allenamento personalizzato e, in presenza di problematiche specifiche, il percorso può essere integrato con il supporto fisioterapico.
+              </p>
+            </div>
+
+            {/* Feature Highlights */}
+            <div className="mt-6 pt-5 border-t border-slate-200/80 w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="flex items-center gap-2.5 text-sm font-semibold text-[#003e47]">
+                <ShieldCheck className="w-4 h-4 text-[#005662] shrink-0" />
+                <span>Specialisti del movimento</span>
+              </div>
+              <div className="flex items-center gap-2.5 text-sm font-semibold text-[#003e47]">
+                <Users className="w-4 h-4 text-[#005662] shrink-0" />
+                <span>Team multidisciplinare</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Staff Image with Black Gradient Overlay for visual continuity */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="lg:col-span-6 relative"
+          >
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-900/10 bg-slate-900 group">
+              {/* Image Container with 1200x800 aspect ratio (3:2) */}
+              <div className="relative w-full aspect-[1200/800] sm:aspect-[3/2] overflow-hidden bg-slate-950">
+                {!imageError ? (
+                  <img
+                    src="/staff.png"
+                    alt="Staff e Specialisti Zenith"
+                    width={1200}
+                    height={800}
+                    onError={() => setImageError(true)}
+                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  />
+                ) : (
+                  /* Elegant fallback if image is in upload stage */
+                  <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#002b31] via-[#003e47] to-black text-white p-8 text-center">
+                    <Users className="w-16 h-16 text-teal-300/80 mb-3" />
+                    <span className="font-heading text-2xl uppercase tracking-wider">Staff Zenith</span>
+                    <span className="font-sans text-xs text-teal-200/80 mt-1">Specialisti in Fisioterapia & Chinesiologia</span>
+                  </div>
+                )}
+
+                {/* Sfumatura nera / Dark gradients for seamless visual continuity */}
+                {/* 1. Bottom-up dark gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
+                
+                {/* 2. Left-side subtle shadow for transition */}
+                <div className="absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-black/50 to-transparent pointer-events-none" />
+
+                {/* 3. Soft vignette around borders */}
+                <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-3xl pointer-events-none" />
+
+                {/* Caption / Tag overlay on the image */}
+                <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 text-white z-10">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[11px] font-sans font-semibold text-teal-200 uppercase tracking-wider mb-1.5">
+                    <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
+                    Team Specialistico Zenith
+                  </div>
+                  <p className="font-sans text-xs sm:text-sm text-slate-200 font-medium line-clamp-1 drop-shadow-md">
+                    Fisioterapisti, Chinesiologi e Trainer sempre al tuo fianco.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
         {/* Graphic Flow Representation: VALUTAZIONE -> PERCORSO PERSONALIZZATO -> MOVIMENTO + FISIOTERAPIA */}
-        <div className="mt-14 sm:mt-18">
+        <div className="mt-14 sm:mt-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 relative">
             {/* Step 1: VALUTAZIONE */}
             <motion.div
