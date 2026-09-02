@@ -6,7 +6,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
+const BREVO_LIST_ID = Number(process.env.BREVO_LIST_ID) || 51;
 
 app.use(express.json());
 
@@ -19,9 +20,11 @@ app.post('/api/leads', async (req, res) => {
       return res.status(400).json({ error: 'Nome ed email sono obbligatori' });
     }
 
-    const apiKey =
-      process.env.BREVO_API_KEY ||
-      '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';
+    const apiKey = process.env.BREVO_API_KEY;
+    if (!apiKey) {
+      console.error('[Brevo API] BREVO_API_KEY non configurata: lead NON salvato.', { email });
+      return res.status(500).json({ error: 'Configurazione Brevo mancante sul server' });
+    }
 
     // Parse names
     const nameParts = (fullName || '').trim().split(' ');
@@ -39,84 +42,50 @@ app.post('/api/leads', async (req, res) => {
       }
     }
 
-    const mainPayload = {
+    // ATTENZIONE: Brevo accetta la richiesta (201) ma SCARTA silenziosamente gli
+    // attributi che non esistono nell'account. Qui usiamo solo attributi esistenti.
+    const attributes: Record<string, string> = {
+      FIRSTNAME: firstName,
+      LASTNAME: lastName,
+      SERVIZIO_CLIENTE: interest || '',
+      MESSAGE_FORM: message || '',
+      SOURCE: 'Landing Page Zenith Fisiofit',
+    };
+    if (formattedPhone) {
+      attributes.SMS = formattedPhone;
+      attributes.WHATSAPP = formattedPhone;
+      attributes.TELEFONO = formattedPhone;
+    }
+
+    const payload = {
       email: email.trim().toLowerCase(),
-      attributes: {
-        FIRSTNAME: firstName,
-        LASTNAME: lastName,
-        NOME: firstName,
-        COGNOME: lastName,
-        NOME_COMPLETO: fullName.trim(),
-        SMS: formattedPhone,
-        WHATSAPP: formattedPhone,
-        PERCORSO_INTERESSE: interest || '',
-        INTERESSE: interest || '',
-        MESSAGGIO: message || '',
-        FONTE: 'Landing Page Zenith Fisiofit',
-      },
-      listIds: [51],
+      attributes,
+      listIds: [BREVO_LIST_ID],
       updateEnabled: true,
     };
 
-    console.log(`[Brevo API] Registering contact ${email} to list #51...`);
+    console.log(`[Brevo API] Registering contact ${payload.email} to list #${BREVO_LIST_ID}...`);
 
-    let response = await fetch('https://api.brevo.com/v3/contacts', {
+    const response = await fetch('https://api.brevo.com/v3/contacts', {
       method: 'POST',
       headers: {
         'api-key': apiKey,
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify(mainPayload),
+      body: JSON.stringify(payload),
     });
 
-    // If custom attributes fail on Brevo, fallback to standard attributes
     if (!response.ok) {
       const errorMsg = await response.text();
-      console.warn('[Brevo API] First attempt notice:', response.status, errorMsg);
-
-      const fallbackPayload = {
-        email: email.trim().toLowerCase(),
-        attributes: {
-          FIRSTNAME: firstName,
-          LASTNAME: lastName,
-          SMS: formattedPhone,
-        },
-        listIds: [51],
-        updateEnabled: true,
-      };
-
-      response = await fetch('https://api.brevo.com/v3/contacts', {
-        method: 'POST',
-        headers: {
-          'api-key': apiKey,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(fallbackPayload),
-      });
-
-      if (!response.ok) {
-        // Minimal fallback (only email and list 51)
-        const minimalPayload = {
-          email: email.trim().toLowerCase(),
-          listIds: [51],
-          updateEnabled: true,
-        };
-        response = await fetch('https://api.brevo.com/v3/contacts', {
-          method: 'POST',
-          headers: {
-            'api-key': apiKey,
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify(minimalPayload),
-        });
-      }
+      console.error('[Brevo API] Errore', response.status, errorMsg, { email: payload.email });
+      return res
+        .status(502)
+        .json({ error: 'Brevo ha rifiutato il contatto', status: response.status, details: errorMsg });
     }
 
-    const data = await response.json().catch(() => ({ success: true }));
-    console.log(`[Brevo API] Contact ${email} successfully processed into List #51.`);
+    const data = await response.json().catch(() => ({}));
+    console.log(`[Brevo API] Contact ${payload.email} salvato nella lista #${BREVO_LIST_ID}.`);
     return res.json({ success: true, data });
   } catch (error: any) {
     console.error('[Brevo API Error]:', error);
@@ -126,7 +95,7 @@ app.post('/api/leads', async (req, res) => {
 
 // Health check route
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok' });
+  res.json({ status: 'ok', brevoConfigured: Boolean(process.env.BREVO_API_KEY) });
 });
 
 async function startServer() {
@@ -142,6 +111,10 @@ async function startServer() {
     app.get('*', (_req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
+  }
+
+  if (!process.env.BREVO_API_KEY) {
+    console.warn('[AVVISO] BREVO_API_KEY non impostata: i lead NON verranno salvati su Brevo.');
   }
 
   app.listen(PORT, '0.0.0.0', () => {
