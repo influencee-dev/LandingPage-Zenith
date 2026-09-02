@@ -1,0 +1,6 @@
+{
+  "name": "Zenith Fisiofit Expert",
+  "description": "Landing page ad alta conversione per Zenith Fisiofit Expert: integrazione tra fitness, valutazione chinesiologica e fisioterapia.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
