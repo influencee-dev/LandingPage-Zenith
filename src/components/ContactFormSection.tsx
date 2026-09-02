@@ -38,6 +38,7 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedData, setSubmittedData] = useState<ContactFormData | null>(null);
+  const [leadSaved, setLeadSaved] = useState<boolean | null>(null);
 
   // Synchronize when interest prop updates from plan card clicks
   useEffect(() => {
@@ -84,7 +85,7 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
    * GESTIONE INVIO LEAD & INTEGRAZIONE BREVO (SENDINBLUE LIST #51)
    * =========================================================================
    */
-  const handleBrevoLeadSubmission = async (data: ContactFormData) => {
+  const handleBrevoLeadSubmission = async (data: ContactFormData): Promise<boolean> => {
     try {
       const response = await fetch('/api/leads', {
         method: 'POST',
@@ -103,12 +104,15 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
 
       if (!response.ok) {
         const errJson = await response.json().catch(() => ({}));
-        console.warn('[BREVO LEAD] Risposta server:', response.status, errJson);
-      } else {
-        console.log('[BREVO LEAD] Lead inserito con successo nella lista #51 di Brevo');
+        console.error('[BREVO LEAD] Salvataggio fallito:', response.status, errJson);
+        return false;
       }
+
+      console.log('[BREVO LEAD] Lead inserito con successo nella lista #51 di Brevo');
+      return true;
     } catch (err) {
       console.error('[BREVO LEAD ERROR] Errore durante invio a Brevo:', err);
+      return false;
     }
   };
 
@@ -148,7 +152,8 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
 
     try {
       // 1. Invio lead a Brevo Lista #51 via endpoint server-side
-      await handleBrevoLeadSubmission(formData);
+      const saved = await handleBrevoLeadSubmission(formData);
+      setLeadSaved(saved);
 
       // 2. Registrazione stato completato
       setSubmittedData({ ...formData });
@@ -159,6 +164,7 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
       window.open(waUrl, '_blank');
     } catch (error) {
       console.error('Errore durante la sottomissione del form:', error);
+      setLeadSaved(false);
       setSubmittedData({ ...formData });
       setIsSubmitted(true);
     } finally {
@@ -168,6 +174,7 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
 
   const handleReset = () => {
     setIsSubmitted(false);
+    setLeadSaved(null);
     setFormData({
       fullName: '',
       phone: '',
@@ -467,12 +474,21 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
                 </h3>
 
                 <p className="font-sans text-base sm:text-lg text-slate-700 mt-2 max-w-lg mx-auto">
-                  La tua richiesta per <strong className="text-[#005662] font-semibold">{submittedData?.interest}</strong> è stata inviata con successo.
+                  La tua richiesta per <strong className="text-[#005662] font-semibold">{submittedData?.interest}</strong> è stata registrata.
                 </p>
 
                 <p className="font-sans text-sm text-slate-500 mt-1 max-w-md mx-auto">
                   Un esperto di Zenith ti ricontatterà al più presto al numero <strong>{submittedData?.phone}</strong>.
                 </p>
+
+                {leadSaved === false && (
+                  <div className="mt-6 p-4 bg-amber-50 border border-amber-300 rounded-xl max-w-lg mx-auto text-left">
+                    <p className="font-sans text-sm text-amber-900 leading-relaxed">
+                      <strong>Attenzione:</strong> non siamo riusciti a registrare automaticamente la tua richiesta.
+                      Per essere certo di essere ricontattato, invia il messaggio su WhatsApp qui sotto.
+                    </p>
+                  </div>
+                )}
 
                 {/* Direct WhatsApp Action Box */}
                 <div className="mt-8 p-6 sm:p-8 bg-[#005662]/5 border border-[#005662]/20 rounded-2xl max-w-lg mx-auto text-left">
