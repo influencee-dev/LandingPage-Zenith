@@ -1,9 +1,0 @@
-# Instrada /api/leads verso lo script PHP (hosting classico Apache).
-RewriteEngine On
-RewriteRule ^api/leads/?$ /api/leads.php [L]
-
-# SPA fallback: tutto il resto va a index.html
-RewriteCond %{REQUEST_URI} !^/api/
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ /index.html [L]
