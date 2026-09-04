@@ -45,12 +45,35 @@ export const FisiofitConceptSection: React.FC = () => {
                 . L'obiettivo non è soltanto allenarsi, ma prevenire le problematiche muscoloscheletriche attraverso l'attività motoria e intervenire, quando necessario, attraverso il centro fisioterapico.
               </p>
               <p className="text-base sm:text-lg leading-relaxed text-slate-600">
-                Il percorso parte dalla persona: attraverso una{' '}
-                <strong className="text-[#002b31] font-semibold">
-                  valutazione chinesiologica
-                </strong>{' '}
-                vengono analizzate caratteristiche, necessità e obiettivi individuali. Da qui viene costruito un programma di allenamento personalizzato e, in presenza di problematiche specifiche, il percorso può essere integrato con il supporto fisioterapico.
+                Il percorso parte dalla persona:
               </p>
+
+              <ul className="space-y-3 pt-1">
+                <li className="flex items-start gap-3 text-base sm:text-lg leading-relaxed text-slate-600">
+                  <CheckCircle2 className="w-5 h-5 text-[#005662] shrink-0 mt-1" />
+                  <span>
+                    Attraverso una{' '}
+                    <strong className="text-[#002b31] font-semibold">valutazione</strong>, dove
+                    vengono analizzate caratteristiche, necessità e obiettivi individuali
+                  </span>
+                </li>
+                <li className="flex items-start gap-3 text-base sm:text-lg leading-relaxed text-slate-600">
+                  <CheckCircle2 className="w-5 h-5 text-[#005662] shrink-0 mt-1" />
+                  <span>
+                    Costruzione di un{' '}
+                    <strong className="text-[#002b31] font-semibold">
+                      programma di allenamento personalizzato
+                    </strong>
+                  </span>
+                </li>
+                <li className="flex items-start gap-3 text-base sm:text-lg leading-relaxed text-slate-600">
+                  <CheckCircle2 className="w-5 h-5 text-[#005662] shrink-0 mt-1" />
+                  <span>
+                    Percorso con{' '}
+                    <strong className="text-[#002b31] font-semibold">supporto fisioterapico</strong>
+                  </span>
+                </li>
+              </ul>
             </div>
 
             {/* Feature Highlights */}
@@ -122,6 +145,14 @@ export const FisiofitConceptSection: React.FC = () => {
 
         {/* Graphic Flow Representation: VALUTAZIONE -> PERCORSO PERSONALIZZATO -> MOVIMENTO + FISIOTERAPIA */}
         <div className="mt-14 sm:mt-20">
+          {/* Titolo del flusso */}
+          <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-14">
+            <h2 className="font-heading text-3xl sm:text-5xl md:text-6xl text-[#002b31] tracking-tight uppercase leading-[0.95]">
+              IL TUO PERCORSO INIZIA DA TE.
+            </h2>
+            <div className="w-20 h-1 bg-[#005662] mx-auto mt-5 rounded-full" />
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 relative">
             {/* Step 1: VALUTAZIONE */}
             <motion.div

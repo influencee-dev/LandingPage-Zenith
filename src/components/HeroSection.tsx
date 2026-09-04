@@ -49,7 +49,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             >
               <Sparkles className="w-4 h-4" />
               <span className="font-sans font-bold text-xs tracking-wider uppercase">
-                Centro Fisiofit Expert
+                Zenith Fisiofit Expert
               </span>
             </div>
 
@@ -69,7 +69,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               id="hero-subheadline"
               className="mt-6 text-base sm:text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl font-normal font-sans"
             >
-              Zenith è un <strong className="text-[#002b31] font-semibold">Centro Fisiofit Expert</strong> che integra attività motoria, valutazione chinesiologica e fisioterapia per costruire un percorso realmente personalizzato.
+              <strong className="text-[#002b31] font-semibold">Zenith Fisiofit Expert</strong> è un centro che integra attività motoria, valutazione chinesiologica e fisioterapia per costruire un percorso realmente personalizzato.
             </p>
 
             {/* Dual CTAs */}
@@ -98,16 +98,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Value Highlights List */}
             <div className="mt-10 pt-8 border-t border-slate-200/80 grid grid-cols-3 gap-4 w-full max-w-xl">
               <div className="flex flex-col">
-                <span className="font-heading text-2xl sm:text-3xl text-[#005662]">100%</span>
-                <span className="font-sans text-xs text-slate-500 font-medium">Personalizzato</span>
+                <span className="font-heading text-lg sm:text-2xl lg:text-[26px] leading-none text-[#005662]">NUTRIZIONE</span>
+                <span className="font-sans text-xs text-slate-500 font-medium mt-1">Percorso nutrizionale</span>
               </div>
               <div className="flex flex-col">
-                <span className="font-heading text-2xl sm:text-3xl text-[#005662]">CHINESIO</span>
-                <span className="font-sans text-xs text-slate-500 font-medium">Valutazione iniziale</span>
+                <span className="font-heading text-lg sm:text-2xl lg:text-[26px] leading-none text-[#005662]">CHINESIOLOGICA</span>
+                <span className="font-sans text-xs text-slate-500 font-medium mt-1">Valutazione iniziale</span>
               </div>
               <div className="flex flex-col">
-                <span className="font-heading text-2xl sm:text-3xl text-[#005662]">FISIO+FIT</span>
-                <span className="font-sans text-xs text-slate-500 font-medium">Metodo integrato</span>
+                <span className="font-heading text-lg sm:text-2xl lg:text-[26px] leading-none text-[#005662]">FISIO+FIT</span>
+                <span className="font-sans text-xs text-slate-500 font-medium mt-1">Metodo integrato</span>
               </div>
             </div>
           </motion.div>

@@ -105,8 +105,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPrivacy }) => {
                 </a>
               </li>
               <li>
-                <a href="#corsi" className="text-slate-400 hover:text-teal-200 transition-colors">
-                  Corsi
+                <a href="#promo" className="text-slate-400 hover:text-teal-200 transition-colors">
+                  Promo
                 </a>
               </li>
               <li>

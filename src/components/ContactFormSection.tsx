@@ -46,10 +46,11 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
   }, [selectedInterest]);
 
   const interestOptions: InterestOption[] = [
-    'Sala Attrezzi',
-    'Sala Attrezzi + Follow Up',
-    'Sala Attrezzi + Wellness',
-    'Corsi',
+    'Palestra Fitness',
+    'Centro Personal Trainer',
+    'Palestra Terapeutica',
+    'Centro Fisioterapia',
+    'Promo',
     'Valutazione / percorso personalizzato',
     'Altro',
   ];
@@ -179,7 +180,7 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
       fullName: '',
       phone: '',
       email: '',
-      interest: 'Sala Attrezzi',
+      interest: 'Palestra Fitness',
       message: '',
       privacyAccepted: false,
     });

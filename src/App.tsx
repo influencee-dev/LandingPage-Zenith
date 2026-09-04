@@ -19,7 +19,7 @@ import { CookieBanner } from './components/CookieBanner';
 import { InterestOption } from './types';
 
 export default function App() {
-  const [selectedInterest, setSelectedInterest] = useState<InterestOption>('Sala Attrezzi');
+  const [selectedInterest, setSelectedInterest] = useState<InterestOption>('Palestra Fitness');
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
 
   // Smooth scroll handler to contact form

@@ -4,10 +4,11 @@
  */
 
 export type InterestOption =
-  | 'Sala Attrezzi'
-  | 'Sala Attrezzi + Follow Up'
-  | 'Sala Attrezzi + Wellness'
-  | 'Corsi'
+  | 'Palestra Fitness'
+  | 'Centro Personal Trainer'
+  | 'Palestra Terapeutica'
+  | 'Centro Fisioterapia'
+  | 'Promo'
   | 'Valutazione / percorso personalizzato'
   | 'Altro';
 

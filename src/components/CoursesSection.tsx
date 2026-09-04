@@ -1,17 +1,49 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Dumbbell, ArrowRight, Sparkles, Building2, CheckCircle2 } from 'lucide-react';
+import { Tag, ArrowRight, Building2 } from 'lucide-react';
 import { InterestOption } from '../types';
 
 interface CoursesSectionProps {
   onSelectCourses: (interest: InterestOption) => void;
 }
 
+interface Promo {
+  id: string;
+  title: string;
+  detail: string;
+  oldPrice: string;
+  newPrice: string;
+}
+
+const PROMOS: Promo[] = [
+  {
+    id: 'sala-attrezzi',
+    title: 'Sala attrezzi + valutazione iniziale',
+    detail: 'Abbonamento annuale',
+    oldPrice: '440€',
+    newPrice: '360€',
+  },
+  {
+    id: 'personal-trainer',
+    title: 'Personal trainer + valutazione iniziale',
+    detail: 'Percorso con trainer dedicato',
+    oldPrice: '640€',
+    newPrice: '440€',
+  },
+  {
+    id: 'wellness',
+    title: 'Sala attrezzi + schede mensili + nutrizionista mensile',
+    detail: 'Percorso completo con supporto nutrizionale',
+    oldPrice: '1040€',
+    newPrice: '860€',
+  },
+];
+
 export const CoursesSection: React.FC<CoursesSectionProps> = ({ onSelectCourses }) => {
   const [imageError, setImageError] = useState(false);
 
   return (
-    <section id="corsi" className="py-16 sm:py-24 bg-white">
+    <section id="promo" className="py-16 sm:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -29,48 +61,60 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({ onSelectCourses 
             {/* Left Content Column */}
             <div className="lg:col-span-7 flex flex-col items-start text-left">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#005662]/10 text-[#005662] mb-5 border border-[#005662]/15">
-                <Dumbbell className="w-4 h-4" />
+                <Tag className="w-4 h-4" />
                 <span className="font-sans font-bold text-xs tracking-wider uppercase">
-                  Attività di Gruppo & Specialistiche
+                  Promozioni attive
                 </span>
               </div>
 
               <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl text-[#002b31] tracking-tight uppercase leading-[0.95]">
-                CERCHI UN CORSO?
+                CERCHI UNA PROMO?
               </h2>
 
               <p className="font-sans text-base sm:text-lg text-slate-700 mt-5 leading-relaxed max-w-xl font-normal">
-                Scopri tutte le attività, i corsi a piccoli gruppi e i percorsi specialistici di Zenith per muoverti al meglio con istruttori qualificati.
+                Tre formule pensate per iniziare subito il tuo percorso, a un prezzo riservato a
+                chi si iscrive adesso.
               </p>
 
-              {/* Course Highlights */}
-              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3.5 w-full max-w-lg">
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#003e47]">
-                  <CheckCircle2 className="w-4 h-4 text-[#007a8c] shrink-0" />
-                  <span>Gruppi a numero chiuso</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#003e47]">
-                  <CheckCircle2 className="w-4 h-4 text-[#007a8c] shrink-0" />
-                  <span>Trainer e Chinesiologi dedicati</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#003e47]">
-                  <CheckCircle2 className="w-4 h-4 text-[#007a8c] shrink-0" />
-                  <span>Spazi ampi e attrezzati</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#003e47]">
-                  <CheckCircle2 className="w-4 h-4 text-[#007a8c] shrink-0" />
-                  <span>Programmi per ogni livello</span>
-                </div>
+              {/* Elenco promo */}
+              <div className="mt-7 w-full max-w-2xl space-y-3.5">
+                {PROMOS.map((promo) => (
+                  <div
+                    key={promo.id}
+                    className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-sm hover:shadow-md hover:border-[#005662]/40 transition-all flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+                  >
+                    <div className="min-w-0">
+                      <div className="font-sans text-sm sm:text-base font-bold text-[#002b31] leading-snug">
+                        {promo.title}
+                      </div>
+                      <div className="font-sans text-xs text-slate-500 mt-0.5">{promo.detail}</div>
+                    </div>
+
+                    <div className="flex items-baseline gap-2.5 shrink-0">
+                      <span className="font-sans text-sm sm:text-base text-slate-400 line-through">
+                        {promo.oldPrice}
+                      </span>
+                      <span className="font-heading text-3xl sm:text-4xl text-[#005662] tracking-tight">
+                        {promo.newPrice}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
+
+              {/* Nota pagamenti dilazionati */}
+              <p className="font-sans text-xs text-slate-500 mt-4">
+                Possibilità di pagamenti dilazionati.
+              </p>
 
               <div className="mt-8 pt-2">
                 <button
                   type="button"
-                  id="btn-chiedi-info-corsi"
-                  onClick={() => onSelectCourses('Corsi')}
+                  id="btn-chiedi-info-promo"
+                  onClick={() => onSelectCourses('Promo')}
                   className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#005662] hover:bg-[#003e47] text-white font-sans text-sm sm:text-base font-bold tracking-wider uppercase rounded-xl shadow-md hover:shadow-xl transition-all duration-200 cursor-pointer"
                 >
-                  <span>CHIEDI INFORMAZIONI SUI CORSI</span>
+                  <span>APPROFITTA DELLA PROMO</span>
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
@@ -82,7 +126,7 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({ onSelectCourses 
                 {!imageError ? (
                   <img
                     src="/centro.png"
-                    alt="Centro Zenith e Spazi Corsi"
+                    alt="Centro Zenith"
                     width={1000}
                     height={1000}
                     onError={() => setImageError(true)}
@@ -92,7 +136,7 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({ onSelectCourses 
                   <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#002b31] via-[#003e47] to-slate-900 text-white p-8 text-center">
                     <Building2 className="w-16 h-16 text-teal-300/80 mb-3" />
                     <span className="font-heading text-2xl uppercase tracking-wider">Centro Zenith</span>
-                    <span className="font-sans text-xs text-teal-200/80 mt-1">Sale Corsi & Attrezzature Specialistiche</span>
+                    <span className="font-sans text-xs text-teal-200/80 mt-1">Spazi e Attrezzature Specialistiche</span>
                   </div>
                 )}
 
@@ -107,7 +151,7 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({ onSelectCourses 
                     Il Nostro Centro
                   </div>
                   <p className="font-sans text-xs sm:text-sm text-slate-200 font-medium drop-shadow">
-                    Spazi dedicati a corsi di gruppo e percorsi specialistici.
+                    Spazi dedicati ai percorsi personalizzati Zenith.
                   </p>
                 </div>
               </div>
@@ -118,4 +162,3 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({ onSelectCourses 
     </section>
   );
 };
-
