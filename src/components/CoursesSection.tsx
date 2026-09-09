@@ -11,7 +11,8 @@ interface Promo {
   id: string;
   title: string;
   detail: string;
-  oldPrice: string;
+  /** Prezzo pieno da mostrare barrato. Se assente, si mostra solo il prezzo promo. */
+  oldPrice?: string;
   newPrice: string;
 }
 
@@ -24,11 +25,10 @@ const PROMOS: Promo[] = [
     newPrice: '360€',
   },
   {
-    id: 'personal-trainer',
-    title: 'Personal trainer + valutazione iniziale',
-    detail: 'Percorso con trainer dedicato',
-    oldPrice: '640€',
-    newPrice: '440€',
+    id: 'schede-mensili',
+    title: 'Sala attrezzi + valutazione iniziale + scheda mensile',
+    detail: 'Abbonamento annuale con programmazione mensile',
+    newPrice: '510€',
   },
   {
     id: 'wellness',
@@ -91,9 +91,11 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({ onSelectCourses 
                     </div>
 
                     <div className="flex items-baseline gap-2.5 shrink-0">
-                      <span className="font-sans text-sm sm:text-base text-slate-400 line-through">
-                        {promo.oldPrice}
-                      </span>
+                      {promo.oldPrice && (
+                        <span className="font-sans text-sm sm:text-base text-slate-400 line-through">
+                          {promo.oldPrice}
+                        </span>
+                      )}
                       <span className="font-heading text-3xl sm:text-4xl text-[#005662] tracking-tight">
                         {promo.newPrice}
                       </span>

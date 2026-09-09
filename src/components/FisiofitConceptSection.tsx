@@ -42,7 +42,7 @@ export const FisiofitConceptSection: React.FC = () => {
                 <strong className="text-[#005662] font-semibold">
                   approccio integrato al movimento
                 </strong>
-                . L'obiettivo non è soltanto allenarsi, ma prevenire le problematiche muscoloscheletriche attraverso l'attività motoria e intervenire, quando necessario, attraverso il centro fisioterapico.
+                . L'obiettivo non è soltanto allenarsi, ma prevenire le problematiche muscoloscheletriche attraverso l'attività motoria preventiva ed adattata e, quando necessario, attraverso il centro fisioterapico.
               </p>
               <p className="text-base sm:text-lg leading-relaxed text-slate-600">
                 Il percorso parte dalla persona:
@@ -145,14 +145,6 @@ export const FisiofitConceptSection: React.FC = () => {
 
         {/* Graphic Flow Representation: VALUTAZIONE -> PERCORSO PERSONALIZZATO -> MOVIMENTO + FISIOTERAPIA */}
         <div className="mt-14 sm:mt-20">
-          {/* Titolo del flusso */}
-          <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-14">
-            <h2 className="font-heading text-3xl sm:text-5xl md:text-6xl text-[#002b31] tracking-tight uppercase leading-[0.95]">
-              IL TUO PERCORSO INIZIA DA TE.
-            </h2>
-            <div className="w-20 h-1 bg-[#005662] mx-auto mt-5 rounded-full" />
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 relative">
             {/* Step 1: VALUTAZIONE */}
             <motion.div

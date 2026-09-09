@@ -78,7 +78,7 @@ const PATHS: PathCard[] = [
     icon: Stethoscope,
     includes: [
       'Valutazione fisioterapica e funzionale',
-      'Terapia manuale e trattamenti osteopatici',
+      'Terapia manuale',
       'Terapie strumentali: tecar, laser, ultrasuoni',
       'Riabilitazione post-trauma e post-chirurgica',
       'Trattamento del dolore muscoloscheletrico',

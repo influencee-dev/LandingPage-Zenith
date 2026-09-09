@@ -34,11 +34,9 @@ export const MethodSection: React.FC = () => {
           </h2>
           <div className="w-20 h-1 bg-[#005662] mx-auto mt-5 mb-6 rounded-full" />
           <p className="font-sans text-base sm:text-lg text-slate-600 leading-relaxed">
-            Il metodo Zenith mette la persona prima dell'esercizio. Non partiamo da una scheda
-            standard, ma da chi sei: come ti muovi, da dove parti e dove vuoi arrivare. Su questa
-            base costruiamo un percorso che cresce con te, seguito passo dopo passo da chinesiologi,
-            trainer e fisioterapisti che lavorano insieme. È così che l'allenamento diventa uno
-            strumento di salute, e non solo di performance.
+            Il metodo Centro Zenith Fisiofit Expert mette la persona prima dell'esercizio. Non
+            partiamo da un allenamento standard, ma valutiamo chi sei, come ti muovi e dove vuoi
+            arrivare.
           </p>
         </div>
 

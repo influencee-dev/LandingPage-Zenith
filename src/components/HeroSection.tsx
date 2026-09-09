@@ -153,7 +153,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         <span className="font-heading text-lg text-white tracking-wide">01. VALUTAZIONE</span>
                       </div>
                       <p className="font-sans text-xs text-teal-100/90 mt-0.5 leading-snug">
-                        Analisi chinesiologica posturale, funzionale e test degli obiettivi personali.
+                        Analisi chinesiologica e posturale. Test funzionali e obiettivi personalizzati.
                       </p>
                     </div>
                   </div>
@@ -168,7 +168,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         <span className="font-heading text-lg text-white tracking-wide">02. PROGRAMMAZIONE SU MISURA</span>
                       </div>
                       <p className="font-sans text-xs text-teal-100/90 mt-0.5 leading-snug">
-                        Schede di lavoro specifiche, monitoraggio e progressione continua.
+                        Schede di allenamento personalizzato, monitoraggio e progressione continua.
                       </p>
                     </div>
                   </div>
@@ -183,7 +183,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         <span className="font-heading text-lg text-white tracking-wide">03. PREVENZIONE & FISIOTERAPIA</span>
                       </div>
                       <p className="font-sans text-xs text-teal-100/90 mt-0.5 leading-snug">
-                        Supporto fisioterapico dedicato e sinergia per recupero e benessere duraturo.
+                        Supporto fisioterapico e riabilitativo per un benessere duraturo.
                       </p>
                     </div>
                   </div>
