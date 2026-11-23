@@ -4,11 +4,10 @@
  */
 
 export type InterestOption =
-  | 'Palestra Fitness'
-  | 'Centro Personal Trainer'
-  | 'Palestra Terapeutica'
-  | 'Centro Fisioterapia'
-  | 'Promo'
+  | 'Sala Attrezzi'
+  | 'Sala Attrezzi + Follow Up'
+  | 'Sala Attrezzi + Wellness'
+  | 'Corsi'
   | 'Valutazione / percorso personalizzato'
   | 'Altro';
 
@@ -18,7 +17,8 @@ export interface ContactFormData {
   email: string;
   interest: InterestOption;
   message: string;
-  privacyAccepted: boolean;
+  marketingCommunicationsConsent: boolean;
+  marketingAdsConsent: boolean;
 }
 
 /**

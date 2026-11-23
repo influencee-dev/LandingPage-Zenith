@@ -42,38 +42,15 @@ export const FisiofitConceptSection: React.FC = () => {
                 <strong className="text-[#005662] font-semibold">
                   approccio integrato al movimento
                 </strong>
-                . L'obiettivo non è soltanto allenarsi, ma prevenire le problematiche muscoloscheletriche attraverso l'attività motoria preventiva ed adattata e, quando necessario, attraverso il centro fisioterapico.
+                . L'obiettivo non è soltanto allenarsi, ma prevenire le problematiche muscoloscheletriche attraverso l'attività motoria e intervenire, quando necessario, attraverso il centro fisioterapico.
               </p>
               <p className="text-base sm:text-lg leading-relaxed text-slate-600">
-                Il percorso parte dalla persona:
+                Il percorso parte dalla persona: attraverso una{' '}
+                <strong className="text-[#002b31] font-semibold">
+                  valutazione chinesiologica
+                </strong>{' '}
+                vengono analizzate caratteristiche, necessità e obiettivi individuali. Da qui viene costruito un programma di allenamento personalizzato e, in presenza di problematiche specifiche, il percorso può essere integrato con il supporto fisioterapico.
               </p>
-
-              <ul className="space-y-3 pt-1">
-                <li className="flex items-start gap-3 text-base sm:text-lg leading-relaxed text-slate-600">
-                  <CheckCircle2 className="w-5 h-5 text-[#005662] shrink-0 mt-1" />
-                  <span>
-                    Attraverso una{' '}
-                    <strong className="text-[#002b31] font-semibold">valutazione</strong>, dove
-                    vengono analizzate caratteristiche, necessità e obiettivi individuali
-                  </span>
-                </li>
-                <li className="flex items-start gap-3 text-base sm:text-lg leading-relaxed text-slate-600">
-                  <CheckCircle2 className="w-5 h-5 text-[#005662] shrink-0 mt-1" />
-                  <span>
-                    Costruzione di un{' '}
-                    <strong className="text-[#002b31] font-semibold">
-                      programma di allenamento personalizzato
-                    </strong>
-                  </span>
-                </li>
-                <li className="flex items-start gap-3 text-base sm:text-lg leading-relaxed text-slate-600">
-                  <CheckCircle2 className="w-5 h-5 text-[#005662] shrink-0 mt-1" />
-                  <span>
-                    Percorso con{' '}
-                    <strong className="text-[#002b31] font-semibold">supporto fisioterapico</strong>
-                  </span>
-                </li>
-              </ul>
             </div>
 
             {/* Feature Highlights */}

@@ -15,12 +15,15 @@ import { FinalCTASection } from './components/FinalCTASection';
 import { Footer } from './components/Footer';
 import { MobileStickyCTA } from './components/MobileStickyCTA';
 import { PrivacyModal } from './components/PrivacyModal';
+import { CookiePolicyModal } from './components/CookiePolicyModal';
 import { CookieBanner } from './components/CookieBanner';
 import { InterestOption } from './types';
 
 export default function App() {
-  const [selectedInterest, setSelectedInterest] = useState<InterestOption>('Palestra Fitness');
+  const [selectedInterest, setSelectedInterest] = useState<InterestOption>('Sala Attrezzi');
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isCookiePolicyOpen, setIsCookiePolicyOpen] = useState(false);
+  const [isCookiePreferencesOpen, setIsCookiePreferencesOpen] = useState(false);
 
   // Smooth scroll handler to contact form
   const scrollToForm = (interest?: InterestOption) => {
@@ -82,7 +85,11 @@ export default function App() {
       </main>
 
       {/* 9. FOOTER */}
-      <Footer onOpenPrivacy={() => setIsPrivacyOpen(true)} />
+      <Footer
+        onOpenPrivacy={() => setIsPrivacyOpen(true)}
+        onOpenCookiePolicy={() => setIsCookiePolicyOpen(true)}
+        onManageCookies={() => setIsCookiePreferencesOpen(true)}
+      />
 
       {/* MOBILE STICKY CTA */}
       <MobileStickyCTA onCtaClick={() => scrollToForm()} />
@@ -91,10 +98,23 @@ export default function App() {
       <PrivacyModal
         isOpen={isPrivacyOpen}
         onClose={() => setIsPrivacyOpen(false)}
+        onOpenCookiePolicy={() => setIsCookiePolicyOpen(true)}
+      />
+
+      {/* COOKIE POLICY MODAL */}
+      <CookiePolicyModal
+        isOpen={isCookiePolicyOpen}
+        onClose={() => setIsCookiePolicyOpen(false)}
+        onOpenPrivacy={() => setIsPrivacyOpen(true)}
+        onOpenCookiePreferences={() => setIsCookiePreferencesOpen(true)}
       />
 
       {/* COOKIE POPUP / BANNER */}
-      <CookieBanner onOpenPrivacy={() => setIsPrivacyOpen(true)} />
+      <CookieBanner
+        isForceOpen={isCookiePreferencesOpen}
+        onCloseForceOpen={() => setIsCookiePreferencesOpen(false)}
+        onOpenCookiePolicy={() => setIsCookiePolicyOpen(true)}
+      />
     </div>
   );
 }

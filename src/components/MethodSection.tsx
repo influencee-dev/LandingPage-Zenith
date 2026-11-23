@@ -29,15 +29,15 @@ export const MethodSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-18">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#005662]/10 text-[#005662] mb-4">
+            <span className="font-sans font-bold text-xs tracking-wider uppercase">
+              Come Lavoriamo
+            </span>
+          </div>
           <h2 className="font-heading text-3xl sm:text-5xl md:text-6xl text-[#002b31] tracking-tight uppercase leading-[0.95]">
-            IL METODO ZENITH.
+            IL TUO PERCORSO INIZIA DA TE.
           </h2>
-          <div className="w-20 h-1 bg-[#005662] mx-auto mt-5 mb-6 rounded-full" />
-          <p className="font-sans text-base sm:text-lg text-slate-600 leading-relaxed">
-            Il metodo Centro Zenith Fisiofit Expert mette la persona prima dell'esercizio. Non
-            partiamo da un allenamento standard, ma valutiamo chi sei, come ti muovi e dove vuoi
-            arrivare.
-          </p>
+          <div className="w-20 h-1 bg-[#005662] mx-auto mt-5 rounded-full" />
         </div>
 
         {/* 3 Step Sequence */}
