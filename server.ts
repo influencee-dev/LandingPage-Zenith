@@ -14,7 +14,15 @@ app.use(express.json());
 // API route for Brevo integration (List #51)
 app.post('/api/leads', async (req, res) => {
   try {
-    const { fullName, phone, email, interest, message } = req.body;
+    const {
+      fullName,
+      phone,
+      email,
+      interest,
+      message,
+      marketingCommunicationsConsent,
+      marketingAdsConsent,
+    } = req.body;
 
     if (!email || !fullName) {
       return res.status(400).json({ error: 'Nome ed email sono obbligatori' });
@@ -44,12 +52,14 @@ app.post('/api/leads', async (req, res) => {
 
     // ATTENZIONE: Brevo accetta la richiesta (201) ma SCARTA silenziosamente gli
     // attributi che non esistono nell'account. Qui usiamo solo attributi esistenti.
-    const attributes: Record<string, string> = {
+    const attributes: Record<string, string | boolean> = {
       FIRSTNAME: firstName,
       LASTNAME: lastName,
       SERVIZIO_CLIENTE: interest || '',
       MESSAGE_FORM: message || '',
       SOURCE: 'Landing Page Zenith Fisiofit',
+      CONSENSO_PROMOZIONI: Boolean(marketingCommunicationsConsent),
+      CONSENSO_ADS: Boolean(marketingAdsConsent),
     };
     if (formattedPhone) {
       attributes.SMS = formattedPhone;
