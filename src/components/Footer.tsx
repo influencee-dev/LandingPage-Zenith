@@ -1,12 +1,18 @@
 import React from 'react';
-import { MapPin, Phone, Mail, Shield, Instagram, Facebook, ArrowUp } from 'lucide-react';
+import { MapPin, Phone, Mail, Shield, Cookie, SlidersHorizontal, Instagram, Facebook, ArrowUp } from 'lucide-react';
 import { ZENITH_CONFIG } from '../types';
 
 interface FooterProps {
   onOpenPrivacy: () => void;
+  onOpenCookiePolicy: () => void;
+  onManageCookies: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenPrivacy }) => {
+export const Footer: React.FC<FooterProps> = ({
+  onOpenPrivacy,
+  onOpenCookiePolicy,
+  onManageCookies,
+}) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -100,13 +106,33 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPrivacy }) => {
                 </button>
               </li>
               <li>
+                <button
+                  type="button"
+                  onClick={onOpenCookiePolicy}
+                  className="text-slate-400 hover:text-teal-200 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Cookie className="w-3.5 h-3.5" />
+                  <span>Cookie Policy</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={onManageCookies}
+                  className="text-slate-400 hover:text-teal-200 transition-colors inline-flex items-center gap-1.5 text-left cursor-pointer"
+                >
+                  <SlidersHorizontal className="w-3.5 h-3.5 shrink-0" />
+                  <span>Gestisci preferenze cookie</span>
+                </button>
+              </li>
+              <li>
                 <a href="#abbonamenti" className="text-slate-400 hover:text-teal-200 transition-colors">
                   Abbonamenti
                 </a>
               </li>
               <li>
-                <a href="#promo" className="text-slate-400 hover:text-teal-200 transition-colors">
-                  Promo
+                <a href="#corsi" className="text-slate-400 hover:text-teal-200 transition-colors">
+                  Corsi
                 </a>
               </li>
               <li>
@@ -119,13 +145,38 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPrivacy }) => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} Zenith Fisiofit Expert. Tutti i diritti riservati.</p>
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+          <p className="leading-relaxed text-center sm:text-left">
+            © 2026 Zenith Fisiofit Expert – Fisiofit S.S.D. a r.l. – P.IVA 04220720710 – REA FG-310657 – Via Radice angolo Via Gandhi, 71121 Foggia ·{' '}
+            <button
+              type="button"
+              onClick={onOpenPrivacy}
+              className="text-slate-300 hover:text-teal-200 underline underline-offset-2 transition-colors cursor-pointer"
+            >
+              Privacy Policy
+            </button>
+            {' · '}
+            <button
+              type="button"
+              onClick={onOpenCookiePolicy}
+              className="text-slate-300 hover:text-teal-200 underline underline-offset-2 transition-colors cursor-pointer"
+            >
+              Cookie Policy
+            </button>
+            {' · '}
+            <button
+              type="button"
+              onClick={onManageCookies}
+              className="text-slate-300 hover:text-teal-200 underline underline-offset-2 transition-colors cursor-pointer"
+            >
+              Gestisci preferenze cookie
+            </button>
+          </p>
 
           <button
             type="button"
             onClick={scrollToTop}
-            className="inline-flex items-center gap-1 text-slate-400 hover:text-teal-200 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1 text-slate-400 hover:text-teal-200 transition-colors shrink-0 cursor-pointer"
           >
             <span>Torna su</span>
             <ArrowUp className="w-3.5 h-3.5" />

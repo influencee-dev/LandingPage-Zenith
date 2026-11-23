@@ -4,15 +4,14 @@ import {
   Send,
   MessageSquare,
   CheckCircle,
-  ShieldCheck,
   User,
   Phone,
   Mail,
-  HelpCircle,
   ArrowRight,
   ExternalLink,
 } from 'lucide-react';
 import { ContactFormData, InterestOption, ZENITH_CONFIG } from '../types';
+import { trackLeadSubmissionEvent } from '../utils/cookieConsent';
 
 interface ContactFormSectionProps {
   selectedInterest: InterestOption;
@@ -31,7 +30,8 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
     email: '',
     interest: selectedInterest,
     message: '',
-    privacyAccepted: false,
+    marketingCommunicationsConsent: false,
+    marketingAdsConsent: false,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -46,11 +46,10 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
   }, [selectedInterest]);
 
   const interestOptions: InterestOption[] = [
-    'Palestra Fitness',
-    'Centro Personal Trainer',
-    'Palestra Terapeutica',
-    'Centro Fisioterapia',
-    'Promo',
+    'Sala Attrezzi',
+    'Sala Attrezzi + Follow Up',
+    'Sala Attrezzi + Wellness',
+    'Corsi',
     'Valutazione / percorso personalizzato',
     'Altro',
   ];
@@ -72,9 +71,6 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
     }
     if (!formData.interest) {
       newErrors.interest = 'Seleziona il percorso o servizio di tuo interesse';
-    }
-    if (!formData.privacyAccepted) {
-      newErrors.privacyAccepted = "È necessario accettare l'informativa privacy per procedere";
     }
 
     setErrors(newErrors);
@@ -100,6 +96,8 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
           email: data.email.trim().toLowerCase(),
           interest: data.interest,
           message: data.message.trim(),
+          marketingCommunicationsConsent: Boolean(data.marketingCommunicationsConsent),
+          marketingAdsConsent: Boolean(data.marketingAdsConsent),
         }),
       });
 
@@ -156,11 +154,14 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
       const saved = await handleBrevoLeadSubmission(formData);
       setLeadSaved(saved);
 
-      // 2. Registrazione stato completato
+      // 2. Eventuale evento pubblicitario conforme (senza interesse, messaggio o dati di contatto)
+      trackLeadSubmissionEvent();
+
+      // 3. Registrazione stato completato
       setSubmittedData({ ...formData });
       setIsSubmitted(true);
 
-      // 3. Apertura della chat WhatsApp con messaggio precompilato
+      // 4. Apertura della chat WhatsApp con messaggio precompilato
       const waUrl = generateWhatsAppUrl(formData);
       window.open(waUrl, '_blank');
     } catch (error) {
@@ -180,9 +181,10 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
       fullName: '',
       phone: '',
       email: '',
-      interest: 'Palestra Fitness',
+      interest: 'Sala Attrezzi',
       message: '',
-      privacyAccepted: false,
+      marketingCommunicationsConsent: false,
+      marketingAdsConsent: false,
     });
     setErrors({});
   };
@@ -384,43 +386,63 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
                   />
                 </div>
 
-                {/* Checkbox Privacy Obbligatoria */}
-                <div className="pt-2">
+                {/* Caselle facoltative (mai preselezionate e mai obbligatorie) */}
+                <div className="pt-2 space-y-3">
                   <label
-                    htmlFor="form-privacy"
+                    htmlFor="form-marketing-communications"
                     className="flex items-start gap-3 cursor-pointer group select-none"
                   >
                     <input
                       type="checkbox"
-                      id="form-privacy"
-                      name="privacyAccepted"
-                      checked={formData.privacyAccepted}
+                      id="form-marketing-communications"
+                      name="marketingCommunicationsConsent"
+                      checked={formData.marketingCommunicationsConsent}
                       onChange={(e) => {
-                        setFormData({ ...formData, privacyAccepted: e.target.checked });
-                        if (errors.privacyAccepted) setErrors({ ...errors, privacyAccepted: '' });
+                        setFormData({
+                          ...formData,
+                          marketingCommunicationsConsent: e.target.checked,
+                        });
                       }}
-                      className="mt-1 w-4 h-4 text-[#005662] rounded border-slate-300 focus:ring-[#005662] cursor-pointer"
+                      className="mt-1 w-4 h-4 text-[#005662] rounded border-slate-300 focus:ring-[#005662] cursor-pointer shrink-0"
                     />
                     <span className="font-sans text-xs sm:text-sm text-slate-600 leading-snug">
-                      Ho letto e accetto l'
+                      Voglio ricevere via WhatsApp, SMS o email promozioni, novità ed eventi di Zenith Fisiofit Expert. Posso disiscrivermi quando voglio.
+                    </span>
+                  </label>
+
+                  <label
+                    htmlFor="form-marketing-ads"
+                    className="flex items-start gap-3 cursor-pointer group select-none"
+                  >
+                    <input
+                      type="checkbox"
+                      id="form-marketing-ads"
+                      name="marketingAdsConsent"
+                      checked={formData.marketingAdsConsent}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          marketingAdsConsent: e.target.checked,
+                        });
+                      }}
+                      className="mt-1 w-4 h-4 text-[#005662] rounded border-slate-300 focus:ring-[#005662] cursor-pointer shrink-0"
+                    />
+                    <span className="font-sans text-xs sm:text-sm text-slate-600 leading-snug">
+                      Acconsento all&apos;uso dei miei dati per mostrarmi le promozioni di Zenith Fisiofit Expert su Facebook, Instagram e Google, come descritto nella{' '}
                       <button
                         type="button"
                         onClick={(e) => {
                           e.preventDefault();
+                          e.stopPropagation();
                           onOpenPrivacy();
                         }}
-                        className="text-[#005662] font-semibold underline underline-offset-2 hover:text-[#003e47] mx-1 cursor-pointer"
+                        className="text-[#005662] font-semibold underline underline-offset-2 hover:text-[#003e47] cursor-pointer"
                       >
-                        informativa privacy
+                        Privacy Policy
                       </button>
-                      <span className="text-[#005662] font-black">*</span>
+                      .
                     </span>
                   </label>
-                  {errors.privacyAccepted && (
-                    <p className="mt-1.5 text-xs text-red-500 font-medium pl-7">
-                      {errors.privacyAccepted}
-                    </p>
-                  )}
                 </div>
 
                 {/* Submit Button */}
@@ -447,12 +469,20 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
                     )}
                   </button>
 
-                  {/* Microcopy rassicurante */}
+                  {/* Testo sotto il modulo di contatto */}
                   <p
                     id="form-microcopy"
-                    className="mt-3.5 text-center font-sans text-xs sm:text-sm text-slate-500 font-medium"
+                    className="mt-4 text-center font-sans text-xs sm:text-sm text-slate-500 leading-relaxed"
                   >
-                    Nessun impegno. Ti ricontatteremo per darti tutte le informazioni di cui hai bisogno.
+                    Inviando la richiesta dichiari di aver letto la{' '}
+                    <button
+                      type="button"
+                      onClick={onOpenPrivacy}
+                      className="text-[#005662] font-semibold underline underline-offset-2 hover:text-[#003e47] cursor-pointer"
+                    >
+                      Privacy Policy
+                    </button>
+                    . Useremo i tuoi dati per risponderti e li registreremo nel nostro gestionale. Ti preghiamo di non scrivere qui informazioni sulla tua salute: ne parleremo in sede durante la valutazione.
                   </p>
                 </div>
               </motion.form>
