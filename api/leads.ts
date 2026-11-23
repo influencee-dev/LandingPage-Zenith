@@ -54,12 +54,9 @@ export default async function handler(req: any, res: any) {
       MESSAGE_FORM: message || '',
       SOURCE: 'Landing Page Zenith Fisiofit',
     };
-    // Attributi di consenso: inviati solo se esistono in Brevo (CONSENSO_PROMOZIONI,
-    // CONSENSO_ADS). Attivare con BREVO_CONSENT_ATTRS=1 dopo averli creati.
-    if (process.env.BREVO_CONSENT_ATTRS === '1') {
-      attributes.CONSENSO_PROMOZIONI = String(Boolean(marketingCommunicationsConsent));
-      attributes.CONSENSO_ADS = String(Boolean(marketingAdsConsent));
-    }
+    // Consensi marketing (richiedono gli attributi CONSENSO_PROMOZIONI e CONSENSO_ADS in Brevo)
+    attributes.CONSENSO_PROMOZIONI = String(Boolean(marketingCommunicationsConsent));
+    attributes.CONSENSO_ADS = String(Boolean(marketingAdsConsent));
     if (formattedPhone) {
       attributes.SMS = formattedPhone;
       attributes.WHATSAPP = formattedPhone;
